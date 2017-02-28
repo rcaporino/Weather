@@ -22,12 +22,15 @@ public class MainActivity extends AppCompatActivity
     TextView future;
 
 
-    String currentTemp = "Now: 45";
-    String todayTemp = "Today: 56/40";
-    String tomTemp = "Tomorrow: 70/40";
-    String futureTemp = "45/42";
+    String currentTemp = "45";
+    String todayTempMax = "56/";
+    String todayTempMin = "40";
+    String tomTempMax = "70/";
+    String tomTempMin = "40";
+    String futureTempMax = "45/";
+    String futureTempMin = "42";
     String futureDay = "";
-
+    String weatherData = "";
 
 
     @Override
@@ -38,7 +41,9 @@ public class MainActivity extends AppCompatActivity
         populateList();
 
         now = (TextView) findViewById(R.id.now);
-        now.setText(currentTemp);
+        now.setText("Now: " + currentTemp);
+
+
 //
 //        today = (TextView) findViewById(R.id.today);
 //        today.setText("Today: " + todayTemp);
@@ -48,6 +53,16 @@ public class MainActivity extends AppCompatActivity
 //
 //        future = (TextView) findViewById(R.id.future);
 //        future.setText(futureDay + futureTemp);
+    }
+
+    public void getURL()
+    {
+
+    }
+
+    public void parseURL()
+    {
+
     }
 
     public void getFutureDay()
@@ -86,9 +101,9 @@ public class MainActivity extends AppCompatActivity
         getFutureDay();
 
         String [] temps = new String[3];
-        temps [0] = todayTemp;
-        temps [1] = tomTemp;
-        temps [2] = futureDay + futureTemp;
+        temps [0] = "Today: " + todayTempMax + todayTempMin;
+        temps [1] = "Tomorrow: " + tomTempMax + tomTempMin;
+        temps [2] = futureDay + futureTempMax + futureTempMin;
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_test, temps);
 
