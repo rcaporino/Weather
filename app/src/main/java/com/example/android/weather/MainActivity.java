@@ -1,17 +1,16 @@
 package com.example.android.weather;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-import java.util.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -55,12 +54,15 @@ public class MainActivity extends AppCompatActivity
 //        future.setText(futureDay + futureTemp);
     }
 
-    public void getURL()
-    {
+    public BufferedReader getURL() throws IOException {
+        String url =
+                "http://api.openweathermap.org/data/2.5/forecast?q=Patchogue,us&cnt=7&units=imperial&appid=c3368eff18484472b806c8fbdf3df950";
 
+        BufferedReader input = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "UTF-8"));
+        return input;
     }
 
-    public void parseURL()
+    public void parseURL(BufferedReader input)
     {
 
     }
