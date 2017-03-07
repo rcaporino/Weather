@@ -11,8 +11,9 @@ import java.net.URL;
  * Created by John on 2/27/2017.
  */
 
-public class WeatherCaller extends AsyncTask<String, Void, BufferedReader>{
+public class WeatherCaller extends AsyncTask<String, Void, String>{
 private String url = "http://api.openweathermap.org/data/2.5/forecast?q=Patchogue,us&cnt=7&units=imperial&appid=c3368eff18484472b806c8fbdf3df950";
+private BufferedReader JSONBuffer;
 
     public WeatherCaller(String newURL){
         url = newURL;
@@ -26,20 +27,25 @@ private String url = "http://api.openweathermap.org/data/2.5/forecast?q=Patchogu
         return url;
     }
 
-    public BufferedReader callURL() throws Throwable{
-        BufferedReader input = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "UTF-8"));
-        return input;
+    public void callURL() throws Throwable{
+        JSONBuffer = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "UTF-8"));
     }
 
     @Override
-    protected BufferedReader doInBackground(String... params) {
+    protected String doInBackground(String... params) {
         Log.i("LOG", "Attempt Interntet Call");
         try {
-            return callURL();
+            callURL();
+            return JSONBuffer.toString();
 
         } catch (Throwable throwable) {
             throwable.printStackTrace();
             return null;
         }
+    }
+    @Override
+    protected void onPostExecute (String JSON) {
+        Log.i("LOG", "Attempt Post Execute");
+
     }
 }
