@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     String futureTempMax = "45/";
     String futureTempMin = "42";
     String futureDay = "";
+    String url = "";
 
 
     @Override
