@@ -2,6 +2,7 @@ package com.example.android.weather;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,7 +20,6 @@ public class MainActivity extends AppCompatActivity
 //    TextView today;
 //    TextView tom;
     TextView future;
-
 
     String currentTemp = "45";
     String todayTempMax = "56/";
@@ -42,14 +42,19 @@ public class MainActivity extends AppCompatActivity
         now = (TextView) findViewById(R.id.now);
         now.setText("Now: " + currentTemp);
 
+//
+//        try {
+//
+//            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "UTF-8"));
+//
+//        } catch (IOException e) {
+//
+//        }
+        //TODO TEMP CODE
+        new WeatherCaller().execute();
 
-        try {
 
-            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "UTF-8"));
-
-        } catch (IOException e) {
-
-        }
+        //
 //        WeatherCaller weather = new WeatherCaller(url);
 //        try {
 //            BufferedReader input = weather.callURL();
@@ -71,6 +76,7 @@ public class MainActivity extends AppCompatActivity
     public void getURL() {
 
     }
+
 
     public void parseURL(BufferedReader input)
     {
