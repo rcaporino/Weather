@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
     String futureTempMax = "45/";
     String futureTempMin = "42";
     String futureDay = "";
-    String url = "";
+    String url = "http://api.openweathermap.org/data/2.5/forecast?q=Patchogue,us&cnt=7&units=imperial&appid=c3368eff18484472b806c8fbdf3df950";
 
 
     @Override
@@ -43,6 +43,20 @@ public class MainActivity extends AppCompatActivity
         now.setText("Now: " + currentTemp);
 
 
+        try {
+
+            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "UTF-8"));
+
+        } catch (IOException e) {
+
+        }
+//        WeatherCaller weather = new WeatherCaller(url);
+//        try {
+//            BufferedReader input = weather.callURL();
+//        } catch (Throwable throwable) {
+//            throwable.printStackTrace();
+//        }
+       // JsonReader reader = new JsonReader();
 //
 //        today = (TextView) findViewById(R.id.today);
 //        today.setText("Today: " + todayTemp);
@@ -54,12 +68,8 @@ public class MainActivity extends AppCompatActivity
 //        future.setText(futureDay + futureTemp);
     }
 
-    public BufferedReader getURL() throws IOException {
-        String url =
-                "http://api.openweathermap.org/data/2.5/forecast?q=Patchogue,us&cnt=7&units=imperial&appid=c3368eff18484472b806c8fbdf3df950";
+    public void getURL() {
 
-        BufferedReader input = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "UTF-8"));
-        return input;
     }
 
     public void parseURL(BufferedReader input)
@@ -112,5 +122,6 @@ public class MainActivity extends AppCompatActivity
         ListView list = (ListView) findViewById(R.id.test);
         list.setAdapter(adapter);
     }
+
 
 }
