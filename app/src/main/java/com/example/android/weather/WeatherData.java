@@ -9,8 +9,18 @@ import java.util.Date;
 public class WeatherData {
     private double temp, temp_min, temp_max, pressure, sea_level;
     private Date date;
-
+    private String description;
     private int humidity;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public WeatherData setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
 
     public double getTemp() {
         return temp;

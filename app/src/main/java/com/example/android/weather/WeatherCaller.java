@@ -16,16 +16,22 @@ import java.util.Date;
  * Created by John on 2/27/2017.
  */
 
-public class WeatherCaller extends AsyncTask<String, Void, ArrayList<WeatherData>>{
+public class WeatherCaller extends AsyncTask<String, String, ArrayList<WeatherData>>{
 private String url = "http://api.openweathermap.org/data/2.5/forecast/daily?q=Patchogue,us&cnt=7&units=imperial&appid=c3368eff18484472b806c8fbdf3df950";
 private BufferedReader JSONBuffer;
 
     public WeatherCaller(String newURL){
         url = newURL;
     }
-    public WeatherCaller (){
-
+    public WeatherCaller (){}
+    public WeatherCaller(Handoff handoff){
+        this.handoff = handoff;
     }
+
+    public interface Handoff{
+        void backToMainActivity(ArrayList<WeatherData> w);
+    }
+    public Handoff handoff = null;
 
     public void setURL( String newURL){
         url = newURL;
@@ -48,10 +54,11 @@ private BufferedReader JSONBuffer;
 
     @Override
     protected ArrayList<WeatherData> doInBackground(String... params) {
-        Log.i("BAKER", "Attempt Internet Call");
+        Log.i("BakerCALL", "Attempt Internet Call");
         try {
+            Log.i("BAKERCALL", "CALLING");
             String json = callURL();
-            Log.i("BAKER!", json);
+            Log.i("BakerJSONRAW", json);
 
             ArrayList<WeatherData> jsonWeather = new ArrayList<WeatherData>();
             JSONObject forecast = new JSONObject(json);
@@ -60,6 +67,7 @@ private BufferedReader JSONBuffer;
             for(int i =0; i<weather.length(); i++){
                 JSONObject w = weather.getJSONObject(i);
                 JSONObject temp = w.getJSONObject("temp");
+                JSONArray subWeather = w.getJSONArray("weather");
                 WeatherData data = new WeatherData()
 //                        .setTemp(main.getDouble("temp"))
                         .setTemp_min(temp.getDouble("min"))
@@ -67,29 +75,30 @@ private BufferedReader JSONBuffer;
                         .setPressure(w.getDouble("pressure"))
 //                        .setSea_level(main.getDouble("sea_level"))
                         .setHumidity(w.getInt("humidity"))
-                        .setDate(new Date(w.getLong("dt")*1000L));
+                        .setDate(new Date(w.getLong("dt")*1000L))
+                        .setDescription(subWeather.getJSONObject(0).getString("description"));
                 jsonWeather.add(data);
-                Log.i("BakerWeathers", data.getDate().toString());
+                Log.i("BakerDESCRIPTIONS", data.getDescription());
             }
 
-            Log.i("Baker", jsonWeather.size() + "");
-            Log.i("Baker", weather.toString());
-
+            Log.i("BakerFORECASTDAYS", jsonWeather.size() + "");
+            Log.i("BakerJsonRelevantDATA", weather.toString());
 
             return jsonWeather;
 
 
 
         } catch (Exception e) {
-            Log.e ("Baker","Exception", e);
+            Log.e ("BakerEXCEPTION","Exception Thrown, Debug", e);
             return null;
         }
     }
 
     @Override
-    protected void onPostExecute(ArrayList<WeatherData> weatherDatas) {
+    protected void onPostExecute(ArrayList<WeatherData> weatherData) {
 
-        super.onPostExecute(weatherDatas);
-        Log.i("LOG", "Attempt Post Execute");
+        super.onPostExecute(weatherData);
+        Log.i("BakerPOST", "Attempt Post Execute");
+        handoff.backToMainActivity(weatherData);
     }
 }
