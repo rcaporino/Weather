@@ -1,27 +1,27 @@
 package com.example.android.weather;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-import java.util.*;
 
-public class MainActivity extends AppCompatActivity
-{
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
 
+public class MainActivity extends AppCompatActivity implements WeatherCaller.Handoff {
+    ArrayList<WeatherData> forecast;
     TextView now;
-//    TextView today;
+    //    TextView today;
 //    TextView tom;
     TextView future;
 
-
+    boolean threadFinish = false;
     String currentTemp = "45";
     String todayTempMax = "56/";
     String todayTempMin = "40";
@@ -30,12 +30,11 @@ public class MainActivity extends AppCompatActivity
     String futureTempMax = "45/";
     String futureTempMin = "42";
     String futureDay = "";
-    String url = "";
+    String url = "http://api.openweathermap.org/data/2.5/forecast?q=Patchogue,us&cnt=7&units=imperial&appid=c3368eff18484472b806c8fbdf3df950";
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         populateList();
@@ -43,7 +42,32 @@ public class MainActivity extends AppCompatActivity
         now = (TextView) findViewById(R.id.now);
         now.setText("Now: " + currentTemp);
 
+//
+//        try {
+//
+//            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "UTF-8"));
+//
+//        } catch (IOException e) {
+//
+//        }
+        //TODO TEMP CODE
 
+
+        new WeatherCaller(this).execute();
+
+
+
+
+
+
+    //
+//        WeatherCaller weather = new WeatherCaller(url);
+//        try {
+//            BufferedReader input = weather.callURL();
+//        } catch (Throwable throwable) {
+//            throwable.printStackTrace();
+//        }
+    // JsonReader reader = new JsonReader();
 //
 //        today = (TextView) findViewById(R.id.today);
 //        today.setText("Today: " + todayTemp);
@@ -53,14 +77,20 @@ public class MainActivity extends AppCompatActivity
 //
 //        future = (TextView) findViewById(R.id.future);
 //        future.setText(futureDay + futureTemp);
+}
+
+    @Override
+    public void backToMainActivity(ArrayList<WeatherData>w){
+        forecast=w;
+        Log.i("Baker", "merged data from caller");
+        threadFinish = true;
+    }
+    public void getURL() {
+
     }
 
-    public void getURL()
-    {
 
-    }
-
-    public void parseURL()
+    public void parseURL(BufferedReader input)
     {
 
     }
@@ -96,6 +126,8 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+
     public void populateList()
     {
         getFutureDay();
@@ -110,5 +142,6 @@ public class MainActivity extends AppCompatActivity
         ListView list = (ListView) findViewById(R.id.test);
         list.setAdapter(adapter);
     }
+
 
 }
