@@ -46,7 +46,8 @@
                 android:layout_width="90dp"
                 android:layout_height="60sp"
                 android:src="@drawable/sunimage"
-                android:layout_marginLeft="258dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="56dp"
                 android:layout_marginTop="12dp"
                 />
 
@@ -86,7 +87,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="More Details"
-                android:layout_marginLeft="250dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="56dp"
                 android:layout_marginTop="75dp"
                 android:textSize="18sp"
                 android:textColor="@color/white"
