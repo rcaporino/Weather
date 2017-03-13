@@ -2,6 +2,8 @@ package com.example.android.weather;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -16,37 +18,31 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements WeatherCaller.Handoff {
     ArrayList<WeatherData> forecast;
-    TextView now;
+TextView now;
+    TextView todayHighLow;
+    TextView humidity;
     //    TextView today;
 //    TextView tom;
     TextView future;
 
     boolean threadFinish = false;
-    String currentTemp = "45";
-    String todayTempMax = "56/";
-    String todayTempMin = "40";
-    String tomTempMax = "70/";
-    String tomTempMin = "40";
-    String futureTempMax = "45/";
-    String futureTempMin = "42";
     String futureDay = "";
-    String url = "http://api.openweathermap.org/data/2.5/forecast?q=Patchogue,us&cnt=7&units=imperial&appid=c3368eff18484472b806c8fbdf3df950";
-
+    int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        populateList();
-
-        now = (TextView) findViewById(R.id.now);
-        now.setText("Now: " + currentTemp);
-
-
+        String heading="More Details";
+        TextView weatherAppText=(TextView)findViewById(R.id.more_Details);
+        SpannableString spanString = new SpannableString(heading);
+        spanString.setSpan(new UnderlineSpan(), 0, spanString.length(), 0);
+        weatherAppText.setText(spanString);
         //TODO TEMP CODE
 
 
         new WeatherCaller(this).execute();
+
 
 }
 
@@ -54,10 +50,28 @@ public class MainActivity extends AppCompatActivity implements WeatherCaller.Han
     public void backToMainActivity(ArrayList<WeatherData>w){
         forecast=w;
         Log.i("Baker", "merged data from caller");
+        setTodaysValues();
+        populateList();
         threadFinish = true;
     }
 
 
+public void setTodaysValues(){
+    WeatherData today = forecast.get(0);
+    now = (TextView) findViewById(R.id.now);
+    now.setText("Now: " + today.getNow());
+
+    humidity = (TextView) findViewById(R.id.humidity);
+    humidity.setText("Humidity: "+today.getHumidity());
+
+    todayHighLow = (TextView) findViewById(R.id.todayHighLow);
+    Double max =today.getTemp_max();
+    int maxInt = max.intValue();
+    Double min = today.getTemp_min();
+    int minInt = min.intValue();
+    todayHighLow.setText("High/Low: "+ maxInt + "/"+minInt);
+
+}
 
     public void getFutureDay()
     {
@@ -96,16 +110,20 @@ public class MainActivity extends AppCompatActivity implements WeatherCaller.Han
     {
         getFutureDay();
 
-        String [] temps = new String[3];
-        temps [0] = "Today: " + todayTempMax + todayTempMin;
-        temps [1] = "Tomorrow: " + tomTempMax + tomTempMin;
-        temps [2] = futureDay + futureTempMax + futureTempMin;
+        ArrayList<String> tempsList = new ArrayList<String>();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_test, temps);
+        tempsList.add( "Tomorrow: " + truncate(forecast.get(1).getTemp_max()) +"/"+ truncate(forecast.get(1).getTemp_min()));
+        tempsList.add(futureDay + truncate(forecast.get(2).getTemp_max()) +"/"+ truncate(forecast.get(2).getTemp_min()));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_test, tempsList);
 
         ListView list = (ListView) findViewById(R.id.test);
         list.setAdapter(adapter);
     }
 
+public int truncate (double trun){
+    Double x = trun;
+    int y = x.intValue();
+    return y;
+}
 
 }

@@ -18,6 +18,7 @@ import java.util.Date;
 
 public class WeatherCaller extends AsyncTask<String, String, ArrayList<WeatherData>>{
 private String url = "http://api.openweathermap.org/data/2.5/forecast/daily?q=Patchogue,us&cnt=7&units=imperial&appid=c3368eff18484472b806c8fbdf3df950";
+private String urlToday = "http://api.openweathermap.org/data/2.5/weather?q=Patchogue&units=imperial&appid=c3368eff18484472b806c8fbdf3df950";
 private BufferedReader JSONBuffer;
 
     public WeatherCaller(String newURL){
@@ -41,7 +42,7 @@ private BufferedReader JSONBuffer;
         return url;
     }
 
-    private String callURL() throws Exception{
+    private String callURL(String url) throws Exception{
         BufferedReader getJsonData = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "UTF-8"));
         String line = "";
 
@@ -57,8 +58,13 @@ private BufferedReader JSONBuffer;
         Log.i("BakerCALL", "Attempt Internet Call");
         try {
             Log.i("BAKERCALL", "CALLING");
-            String json = callURL();
+            String json = callURL(url);
             Log.i("BakerJSONRAW", json);
+
+            String jsonNow = callURL(urlToday);
+            JSONObject objectNow = new JSONObject (jsonNow);
+            JSONObject mainNow = objectNow.getJSONObject("main");
+
 
             ArrayList<WeatherData> jsonWeather = new ArrayList<WeatherData>();
             JSONObject forecast = new JSONObject(json);
@@ -68,17 +74,28 @@ private BufferedReader JSONBuffer;
                 JSONObject w = weather.getJSONObject(i);
                 JSONObject temp = w.getJSONObject("temp");
                 JSONArray subWeather = w.getJSONArray("weather");
-                WeatherData data = new WeatherData()
-//                        .setTemp(main.getDouble("temp"))
-                        .setTemp_min(temp.getDouble("min"))
-                        .setTemp_max(temp.getDouble("max"))
-                        .setPressure(w.getDouble("pressure"))
-//                        .setSea_level(main.getDouble("sea_level"))
-                        .setHumidity(w.getInt("humidity"))
-                        .setDate(new Date(w.getLong("dt")*1000L))
-                        .setDescription(subWeather.getJSONObject(0).getString("description"));
-                jsonWeather.add(data);
-                Log.i("BakerDESCRIPTIONS", data.getDescription());
+                if(i==0) {
+                    WeatherData data = new WeatherData()
+                            .setTemp_min(temp.getDouble("min"))
+                            .setTemp_max(temp.getDouble("max"))
+                            .setPressure(w.getDouble("pressure"))
+                            .setHumidity(w.getInt("humidity"))
+                            .setDate(new Date(w.getLong("dt") * 1000L))
+                            .setDescription(subWeather.getJSONObject(0).getString("description"))
+                            .setNow(mainNow.getDouble("temp"));
+                    jsonWeather.add(data);
+
+                } else{
+                    WeatherData data = new WeatherData()
+                            .setTemp_min(temp.getDouble("min"))
+                            .setTemp_max(temp.getDouble("max"))
+                            .setPressure(w.getDouble("pressure"))
+                            .setHumidity(w.getInt("humidity"))
+                            .setDate(new Date(w.getLong("dt") * 1000L))
+                            .setDescription(subWeather.getJSONObject(0).getString("description"));
+                    jsonWeather.add(data);
+                    Log.i("BakerDESCRIPTIONS", data.getDescription());
+                }
             }
 
             Log.i("BakerFORECASTDAYS", jsonWeather.size() + "");

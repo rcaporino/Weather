@@ -7,7 +7,7 @@ import java.util.Date;
  */
 
 public class WeatherData {
-    private double temp, temp_min, temp_max, pressure, sea_level;
+    private double now, temp_min, temp_max, pressure, sea_level;
     private Date date;
     private String description;
     private int humidity;
@@ -22,12 +22,12 @@ public class WeatherData {
     }
 
 
-    public double getTemp() {
-        return temp;
+    public double getNow() {
+        return now;
     }
 
-    public WeatherData setTemp(double temp) {
-        this.temp = temp;
+    public WeatherData setNow(double temp) {
+        this.now = temp;
         return this;
     }
 
