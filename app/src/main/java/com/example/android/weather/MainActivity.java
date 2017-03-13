@@ -42,41 +42,12 @@ public class MainActivity extends AppCompatActivity implements WeatherCaller.Han
         now = (TextView) findViewById(R.id.now);
         now.setText("Now: " + currentTemp);
 
-//
-//        try {
-//
-//            BufferedReader input = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "UTF-8"));
-//
-//        } catch (IOException e) {
-//
-//        }
+
         //TODO TEMP CODE
 
 
         new WeatherCaller(this).execute();
 
-
-
-
-
-
-    //
-//        WeatherCaller weather = new WeatherCaller(url);
-//        try {
-//            BufferedReader input = weather.callURL();
-//        } catch (Throwable throwable) {
-//            throwable.printStackTrace();
-//        }
-    // JsonReader reader = new JsonReader();
-//
-//        today = (TextView) findViewById(R.id.today);
-//        today.setText("Today: " + todayTemp);
-//
-//        tom = (TextView) findViewById(R.id.tomorrow);
-//        tom.setText("Tomorrow: " + tomTemp);
-//
-//        future = (TextView) findViewById(R.id.future);
-//        future.setText(futureDay + futureTemp);
 }
 
     @Override
@@ -85,15 +56,8 @@ public class MainActivity extends AppCompatActivity implements WeatherCaller.Han
         Log.i("Baker", "merged data from caller");
         threadFinish = true;
     }
-    public void getURL() {
-
-    }
 
 
-    public void parseURL(BufferedReader input)
-    {
-
-    }
 
     public void getFutureDay()
     {
