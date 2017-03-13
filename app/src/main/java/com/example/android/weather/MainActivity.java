@@ -83,23 +83,30 @@ public void setTodaysValues(){
         {
             case Calendar.SUNDAY:
                 futureDay = "Tuesday: ";
+                counter = 1;
                 break;
             case Calendar.MONDAY:
                 futureDay = "Wednesday: ";
+                counter = 2;
                 break;
             case Calendar.TUESDAY:
                 futureDay = "Thursday: ";
+                counter = 3;
                 break;
             case Calendar.WEDNESDAY:
                 futureDay = "Friday: ";
+                counter = 4;
                 break;
             case Calendar.THURSDAY:
                 futureDay = "Saturday: ";
+                counter = 5;
                 break;
             case Calendar.FRIDAY:
                 futureDay = "Sunday: ";
+                counter = 6;
                 break;
             case Calendar.SATURDAY:
+                counter = 7;
                 futureDay = "Monday: ";
         }
     }
@@ -113,7 +120,11 @@ public void setTodaysValues(){
         ArrayList<String> tempsList = new ArrayList<String>();
 
         tempsList.add( "Tomorrow: " + truncate(forecast.get(1).getTemp_max()) +"/"+ truncate(forecast.get(1).getTemp_min()));
-        tempsList.add(futureDay + truncate(forecast.get(2).getTemp_max()) +"/"+ truncate(forecast.get(2).getTemp_min()));
+        for(int i = 0; i <forecast.size()-2;i++) {
+            tempsList.add(dayNames(i) + truncate(forecast.get(i + 2).getTemp_max()) + "/" + truncate(forecast.get(i + 2).getTemp_min()));
+        }
+
+       // tempsList.add()
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_test, tempsList);
 
         ListView list = (ListView) findViewById(R.id.test);
@@ -124,6 +135,41 @@ public int truncate (double trun){
     Double x = trun;
     int y = x.intValue();
     return y;
+}
+
+public String dayNames(int x){
+   int y = x+counter;
+    String ret = "";
+    switch(y%7){
+        case 1:
+        ret = "Tuesday: ";
+        break;
+
+        case 2:
+            ret= "Wednesday: ";
+        break;
+
+        case 3:
+            ret= "Thursday: ";
+        break;
+
+        case 4:
+            ret= "Friday: ";
+        break;
+
+        case 5:
+            ret= "Saturday: ";
+        break;
+
+        case 6:
+            ret= "Sunday: ";
+        break;
+
+        case 7:
+            ret= "Monday: ";
+
+    }
+    return ret;
 }
 
 }
