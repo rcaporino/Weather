@@ -1,61 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.weather.MainActivity">
+    android:background="@color/blue"
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weather App"
-        android:textSize="56dp"
-        android:gravity="center_horizontal"/>
 
-    <TextView
-        android:id="@+id/now"
-        android:layout_width="wrap_content"
+
+
+
+    tools:context="com.example.android.weather.MainActivity"
+    >
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Now: "
-        android:textSize="32dp"
-        android:paddingTop="24sp"
-        android:paddingBottom="48sp"/>
+        android:background="@color/ForestGreen"
+        android:orientation="horizontal"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/now"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today: "
+                android:textSize="32sp"
+                android:paddingTop="4dp"
+                android:paddingBottom="2sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:id="@+id/sun_image"
+                android:layout_width="90dp"
+                android:layout_height="60sp"
+                android:src="@drawable/sunimage"
+                android:layout_marginLeft="258dp"
+                android:layout_marginTop="12dp"
+                />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/todayHighLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="High/Low:"
+            android:textSize="25dp"
+            android:paddingTop="2sp"
+            android:paddingBottom="2sp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/white"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Humidity:"
+                android:textSize="25dp"
+                android:paddingTop="2sp"
+                android:paddingBottom="5sp"
+                android:layout_marginTop="73dp"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/more_Details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="More Details"
+                android:layout_marginLeft="250dp"
+                android:layout_marginTop="75dp"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                />
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:textColor="@color/white"
+        android:divider="#000080"
+        android:dividerHeight="4px"
+        android:padding="15dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
 
     </ListView>
 
     <!--<TextView-->
-        <!--android:id="@+id/today"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Today: "-->
-        <!--android:textSize="32dp"/>-->
+    <!--android:id="@+id/today"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Today: "-->
+    <!--android:textSize="32dp"/>-->
 
     <!--<TextView-->
-        <!--android:id="@+id/tomorrow"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Tomorrow: "-->
-        <!--android:textSize="32dp"/>-->
+    <!--android:id="@+id/tomorrow"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Tomorrow: "-->
+    <!--android:textSize="32dp"/>-->
 
     <!--<TextView-->
-        <!--android:id="@+id/future"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Thursday: "-->
-        <!--android:textSize="32dp"/>-->
+    <!--android:id="@+id/future"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Thursday: "-->
+    <!--android:textSize="32dp"/>-->
 
 
 
 </LinearLayout>
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.example.android.weather.MainActivity">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weather App"
+            android:textSize="56dp"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Now: "
+            android:textSize="32dp"
+            android:paddingTop="24sp"
+            android:paddingBottom="48sp"/>
+
+        <ListView
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+        &lt;!&ndash;<TextView&ndash;&gt;
+            &lt;!&ndash;android:id="@+id/today"&ndash;&gt;
+            &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:text="Today: "&ndash;&gt;
+            &lt;!&ndash;android:textSize="32dp"/>&ndash;&gt;
+
+        &lt;!&ndash;<TextView&ndash;&gt;
+            &lt;!&ndash;android:id="@+id/tomorrow"&ndash;&gt;
+            &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:text="Tomorrow: "&ndash;&gt;
+            &lt;!&ndash;android:textSize="32dp"/>&ndash;&gt;
+
+        &lt;!&ndash;<TextView&ndash;&gt;
+            &lt;!&ndash;android:id="@+id/future"&ndash;&gt;
+            &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:text="Thursday: "&ndash;&gt;
+            &lt;!&ndash;android:textSize="32dp"/>&ndash;&gt;
+
+
+
+    </LinearLayout>
+    -->
