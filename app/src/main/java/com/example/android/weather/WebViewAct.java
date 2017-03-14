@@ -77,7 +77,7 @@ public class WebViewAct extends AppCompatActivity {
 
        WebView webView = (WebView) findViewById(R.id.webView1);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://www.weather.com");
+        webView.loadUrl("https://weather.com/weather/today/l/USNY1100:1:US");
 
         // Set up the user interaction to manually show or hide the system UI.
    /*     mContentView.setOnClickListener(new View.OnClickListener() {
