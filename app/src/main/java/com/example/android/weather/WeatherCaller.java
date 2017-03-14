@@ -76,10 +76,10 @@ private BufferedReader JSONBuffer;
                 JSONArray subWeather = w.getJSONArray("weather");
                 if(i==0) {
                     WeatherData data = new WeatherData()
-                            .setTemp_min(temp.getDouble("min"))
-                            .setTemp_max(temp.getDouble("max"))
+                            .setTemp_min(mainNow.getDouble("temp_min"))
+                            .setTemp_max(mainNow.getDouble("temp_max"))
                             .setPressure(w.getDouble("pressure"))
-                            .setHumidity(w.getInt("humidity"))
+                            .setHumidity(mainNow.getInt("humidity"))
                             .setDate(new Date(w.getLong("dt") * 1000L))
                             .setDescription(subWeather.getJSONObject(0).getString("description"))
                             .setNow(mainNow.getDouble("temp"));
