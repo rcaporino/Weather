@@ -18,7 +18,7 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements WeatherCaller.Handoff {
     ArrayList<WeatherData> forecast;
-TextView now;
+    TextView now;
     TextView todayHighLow;
     TextView humidity;
     //    TextView today;
@@ -33,8 +33,8 @@ TextView now;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String heading="More Details";
-        TextView weatherAppText=(TextView)findViewById(R.id.more_Details);
+        String heading = "More Details";
+        TextView weatherAppText = (TextView) findViewById(R.id.more_Details);
         SpannableString spanString = new SpannableString(heading);
         spanString.setSpan(new UnderlineSpan(), 0, spanString.length(), 0);
         weatherAppText.setText(spanString);
@@ -44,11 +44,11 @@ TextView now;
         new WeatherCaller(this).execute();
 
 
-}
+    }
 
     @Override
-    public void backToMainActivity(ArrayList<WeatherData>w){
-        forecast=w;
+    public void backToMainActivity(ArrayList<WeatherData> w) {
+        forecast = w;
         Log.i("Baker", "merged data from caller");
         setTodaysValues();
         populateList();
@@ -56,31 +56,29 @@ TextView now;
     }
 
 
-public void setTodaysValues(){
-    WeatherData today = forecast.get(0);
-    now = (TextView) findViewById(R.id.now);
-    now.setText("Now: " + today.getNow());
+    public void setTodaysValues() {
+        WeatherData today = forecast.get(0);
+        now = (TextView) findViewById(R.id.now);
+        now.setText("Now: " + today.getNow());
 
-    humidity = (TextView) findViewById(R.id.humidity);
-    humidity.setText("Humidity: "+today.getHumidity());
+        humidity = (TextView) findViewById(R.id.humidity);
+        humidity.setText("Humidity: " + today.getHumidity());
 
-    todayHighLow = (TextView) findViewById(R.id.todayHighLow);
-    Double max =today.getTemp_max();
-    int maxInt = max.intValue();
-    Double min = today.getTemp_min();
-    int minInt = min.intValue();
-    todayHighLow.setText("High/Low: "+ maxInt + "/"+minInt);
+        todayHighLow = (TextView) findViewById(R.id.todayHighLow);
+        Double max = today.getTemp_max();
+        int maxInt = max.intValue();
+        Double min = today.getTemp_min();
+        int minInt = min.intValue();
+        todayHighLow.setText("High/Low: " + maxInt + "/" + minInt);
 
-}
+    }
 
-    public void getFutureDay()
-    {
+    public void getFutureDay() {
 
         Calendar calender = Calendar.getInstance();
         int day = calender.get(Calendar.DAY_OF_WEEK);
 
-        switch(day)
-        {
+        switch (day) {
             case Calendar.SUNDAY:
                 futureDay = "Tuesday: ";
                 counter = 1;
@@ -112,64 +110,62 @@ public void setTodaysValues(){
     }
 
 
-
-    public void populateList()
-    {
+    public void populateList() {
         getFutureDay();
 
         ArrayList<String> tempsList = new ArrayList<String>();
 
-        tempsList.add( "Tomorrow: " + truncate(forecast.get(1).getTemp_max()) +"/"+ truncate(forecast.get(1).getTemp_min()));
-        for(int i = 0; i <forecast.size()-2;i++) {
+        tempsList.add("Tomorrow: " + truncate(forecast.get(1).getTemp_max()) + "/" + truncate(forecast.get(1).getTemp_min()));
+        for (int i = 0; i < forecast.size() - 2; i++) {
             tempsList.add(dayNames(i) + truncate(forecast.get(i + 2).getTemp_max()) + "/" + truncate(forecast.get(i + 2).getTemp_min()));
         }
 
-       // tempsList.add()
+        // tempsList.add()
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_test, tempsList);
 
         ListView list = (ListView) findViewById(R.id.test);
         list.setAdapter(adapter);
     }
 
-public int truncate (double trun){
-    Double x = trun;
-    int y = x.intValue();
-    return y;
-}
-
-public String dayNames(int x){
-   int y = x+counter;
-    String ret = "";
-    switch(y%7){
-        case 1:
-        ret = "Tuesday: ";
-        break;
-
-        case 2:
-            ret= "Wednesday: ";
-        break;
-
-        case 3:
-            ret= "Thursday: ";
-        break;
-
-        case 4:
-            ret= "Friday: ";
-        break;
-
-        case 5:
-            ret= "Saturday: ";
-        break;
-
-        case 6:
-            ret= "Sunday: ";
-        break;
-
-        case 7:
-            ret= "Monday: ";
-
+    public int truncate(double trun) {
+        Double x = trun;
+        int y = x.intValue();
+        return y;
     }
-    return ret;
-}
+
+    public String dayNames(int x) {
+        int y = x + counter;
+        String ret = "";
+        switch (y % 7) {
+            case 1:
+                ret = "Tuesday: ";
+                break;
+
+            case 2:
+                ret = "Wednesday: ";
+                break;
+
+            case 3:
+                ret = "Thursday: ";
+                break;
+
+            case 4:
+                ret = "Friday: ";
+                break;
+
+            case 5:
+                ret = "Saturday: ";
+                break;
+
+            case 6:
+                ret = "Sunday: ";
+                break;
+
+            case 7:
+                ret = "Monday: ";
+
+        }
+        return ret;
+    }
 
 }
