@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements WeatherCaller.Han
                 ret = "Sunday: ";
                 break;
 
-            case 7:
+            case 0:
                 ret = "Monday: ";
 
         }
