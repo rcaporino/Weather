@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements WeatherCaller.Han
 final Context context = this;
     public void moredetails(View view)
     {
-        Intent intent = new Intent(context, WebViewActivity.class);
+        Intent intent = new Intent(context, WebViewAct.class);
         startActivity(intent);
         Log.i("Rob", "Activity started");
     }
